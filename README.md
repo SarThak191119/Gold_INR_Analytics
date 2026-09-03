@@ -60,6 +60,8 @@ Python, SQL Server, SQLAlchemy, pandas, Streamlit, Plotly, yfinance
 
 ## Caveats
 
+-  Even though the first panel says import duty is 0% what it actually means is that before 2012 the tax was not *ad valorem* or a percentage of the value of the gold but instead was a flat Rs 300 for 10g. 
+
 - `GC=F` is the global futures price and not India's actual spot price, so the price per 10g is a derived estimate, not an official quoted rate. This helps the decompisition possible. A future direction might be to compare with India's officially reported gold prices so as to further complement this study.
 
 - Yahoo finance sources data from 2004 to present date. On further investigation ~386 rows  (concentrated in 2004-2011) were found to have discrepancies (close price fell outside high/low range) which are flagged in the database with the (`data_quality_flag`), not deleted. These are mostly concentrated between 2004-2011 and due to the shift towards continous elecrtonic (Globex) trading, before which settlement prices could reasonably diverge from the intraday trading range.  
