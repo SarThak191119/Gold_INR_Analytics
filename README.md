@@ -4,7 +4,7 @@
 
 **Repo:** https://github.com/SarThak191119/Gold_INR_Analytics
 
-What this project answers
+## What this project answers
 
 Gold prices in India move for three  main reasons: the global gold price (in USD), the USD/INR exchange rate, and the government's import duty policy. Any trend of gold prices can be broadly broken down into these 3 factors.
 
@@ -16,7 +16,7 @@ The global gold prices and forex prices are pulled from Yahoo
 Finance via 'yfinance' :
 | Series | Ticker | Notes |
 |---|---|---|
-| Gold futures (USD/oz) | `GC=F` | Daily OHLCV, 2004–present |
+| Gold futures (USD/oz) | `GC=F` | Daily OHLCV (Open, High, Low, Close, and Volume), 2004–present |
 | USD/INR exchange rate | `INR=X` | Daily close |
 | Import duty on gold | manually compiled | ~8 rate changes since 2013, sourced from public Union Budget announcements [Source:Financial Express](https://www.financialexpress.com/policy/economy/why-was-the-import-duty-on-gold-raised/4240070/) |
 
@@ -64,5 +64,15 @@ Python, SQL Server, SQLAlchemy, pandas, Streamlit, Plotly, yfinance
 
 - Yahoo finance sources data from 2004 to present date. On further investigation ~386 rows  (concentrated in 2004-2011) were found to have discrepancies (close price fell outside high/low range) which are flagged in the database with the (`data_quality_flag`), not deleted. These are mostly concentrated between 2004-2011 and due to the shift towards continous elecrtonic (Globex) trading, before which settlement prices could reasonably diverge from the intraday trading range.  
 
+## Reproducing the pipeline locally
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env   # fill in your own SQL Server details
+python fetch_data.py
+python main.py
+python export_sql_snapshot.py
+streamlit run dashboard/app.py
+```
 
 

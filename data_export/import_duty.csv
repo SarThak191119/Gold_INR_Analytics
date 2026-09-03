@@ -1,5 +1,8 @@
 effective_date,duty_pct,notes
-2013-01-01,6.0,Baseline rate
+2004-01-01,0.0,Baseline rate beofre 2012 was 0% with a fixed import duty of 300 INR per 10g
+2012-01-01,2.0,Duty increased
+2012-03-16,4.0,Duty increased
+2013-01-01,6.0,Duty increased
 2013-06-06,8.0,Duty increased 
 2013-08-01,10.0,Union Budget 2021-22 cut
 2019-01-01,12.5,Hiked amid rupee pressure

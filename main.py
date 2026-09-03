@@ -76,7 +76,10 @@ def load_usdinr_data(session):
 
 def load_import_duty(session):
     duty_data = [
-        {"effective_date": date(2013, 1, 1), "duty_pct": 6.0, "notes": "Baseline rate"},
+        {"effective_date": date(2004, 1, 1), "duty_pct": 0.0, "notes": "Baseline rate beofre 2012 was 0% with a fixed import duty of 300 INR per 10g"},
+        {"effective_date": date(2012, 1, 1), "duty_pct": 2.0, "notes": "Duty increased"},
+        {"effective_date": date(2012, 3, 16), "duty_pct": 4.0, "notes": "Duty increased"},
+        {"effective_date": date(2013, 1, 1), "duty_pct": 6.0, "notes": "Duty increased"},
         {"effective_date": date(2013, 6, 6), "duty_pct": 8.0, "notes": "Duty increased "},
         {"effective_date": date(2013, 8, 1), "duty_pct": 10.0, "notes": "Union Budget 2021-22 cut"},
         {"effective_date": date(2019, 1, 1), "duty_pct": 12.5, "notes": "Hiked amid rupee pressure"},
