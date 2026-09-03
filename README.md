@@ -17,4 +17,4 @@ Finance via 'yfinance' :
 |---|---|---|
 | Gold futures (USD/oz) | `GC=F` | Daily OHLCV, 2004–present |
 | USD/INR exchange rate | `INR=X` | Daily close |
-| Import duty on gold | manually compiled | ~8 rate changes since 2013, sourced from public Union Budget announcements |
+| Import duty on gold | manually compiled | ~8 rate changes since 2013, sourced from public Union Budget announcements [Source:Financial Express](https://www.financialexpress.com/policy/economy/why-was-the-import-duty-on-gold-raised/4240070/) |
