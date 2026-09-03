@@ -18,3 +18,12 @@ Finance via 'yfinance' :
 | Gold futures (USD/oz) | `GC=F` | Daily OHLCV, 2004–present |
 | USD/INR exchange rate | `INR=X` | Daily close |
 | Import duty on gold | manually compiled | ~8 rate changes since 2013, sourced from public Union Budget announcements [Source:Financial Express](https://www.financialexpress.com/policy/economy/why-was-the-import-duty-on-gold-raised/4240070/) |
+
+The INR price of gold is derived and is the price of 10g as used conventionally. USD gold prices are for ounces which is converted to 10g hence the factor 3.11035 
+
+```
+gold_inr_per_10g_global = gold_usd_oz × usd_inr_rate ÷ 3.11035
+gold_inr_per_10g_landed = gold_inr_per_10g_global × (1 + duty_pct / 100)
+```
+
+
