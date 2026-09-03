@@ -14,6 +14,7 @@ st.title("Gold Price Analysis")
 gold_inr = pd.read_csv(os.path.join(DATA_DIR,"gold_inr_derived.csv"), parse_dates=["date"])
 duty = pd.read_csv(os.path.join(DATA_DIR,"import_duty.csv"), parse_dates=["effective_date"])
 
+
 #Panel 1
 st.header("Gold Price (INR per 10g) Over Time")
 
@@ -25,18 +26,61 @@ fig.add_trace(go.Scatter(
             mode="lines",
               name="Gold Price (INR per 10g)"))
 
-for _, row in duty.iterrows():
+for i,(_, row) in enumerate(duty.iterrows()):
     fig.add_vline(
         x=row["effective_date"].timestamp()*1000,
           line_dash="dash", 
           line_color="gray", 
           opacity=0.5,
-          annotation_text=f"Import Duty: {row['duty_pct']}%",
-          annotation_position="top",)
+          annotation_text=f"Duty: {row['duty_pct']}%" if i==0 else f"{row['duty_pct']}%",
+          annotation_position="top" if i%2==0 else "bottom",
+          annotation_font_size=10,name="Import Duty Change")
+
+fig.add_trace(go.Scatter(
+    x=[None], y=[None],
+    mode="lines",
+    line=dict(color="gray", dash="dash"),
+    name="Import duty change"
+))
     
 fig.update_layout(xaxis_title="Date", yaxis_title="INR per 10g", height=500)
 st.plotly_chart(fig, use_container_width=True)
 
+st.header("Comparing Trends: Gold (INR) vs Global Gold vs USD/INR")
+
+compare_df = gold_inr[["date", "gold_inr_per_10g_landed", "gold_usd_oz", "usdinr_rate"]].dropna()
+
+# Rebase each series so it starts at 100
+compare_df["gold_inr_indexed"] = compare_df["gold_inr_per_10g_landed"] / compare_df["gold_inr_per_10g_landed"].iloc[0] * 100
+compare_df["gold_usd_indexed"] = compare_df["gold_usd_oz"] / compare_df["gold_usd_oz"].iloc[0] * 100
+compare_df["usdinr_indexed"] = compare_df["usdinr_rate"] / compare_df["usdinr_rate"].iloc[0] * 100
+
+fig_compare = go.Figure()
+fig_compare.add_trace(go.Scatter(x=compare_df["date"], y=compare_df["gold_inr_indexed"], name="Gold price (INR)"))
+fig_compare.add_trace(go.Scatter(x=compare_df["date"], y=compare_df["gold_usd_indexed"], name="Gold price (USD)"))
+fig_compare.add_trace(go.Scatter(x=compare_df["date"], y=compare_df["usdinr_indexed"], name="USD/INR rate"))
+fig_compare.update_layout(
+    xaxis_title="Date", yaxis_title="Indexed to 100 at start date",
+    height=500
+)
+
+for i,(_, row) in enumerate(duty.iterrows()):
+    fig_compare.add_vline(
+        x=row["effective_date"].timestamp()*1000,
+          line_dash="dash", 
+          line_color="gray", 
+          opacity=0.5,
+          annotation_text=f"Duty: {row['duty_pct']}%" if i==0 else f"{row['duty_pct']}%",
+          annotation_position="top" if i%2==0 else "bottom",
+          annotation_font_size=10,name="Import Duty Change")
+
+fig_compare.update_layout(
+    xaxis_title="Date",
+    yaxis_title="Indexed to 100 at start date (log scale)",
+    yaxis_type="log",
+    height=500
+)
+st.plotly_chart(fig_compare, use_container_width=True)
 #panel 2
 st.header("Factors Affecting Gold Price Changes")
 decomposition = pd.read_csv(os.path.join(DATA_DIR,"decomposition.csv"), parse_dates=["date"])
